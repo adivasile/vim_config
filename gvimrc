@@ -37,7 +37,7 @@ set wmh=0
 
 
 "Custom mappings
-nmap <Leader>s :source /home/adrian/Ubuntu\ One/.gvimrc<CR>
+nmap <Leader>s :source /home/adrian/.gvimrc<CR>
 nnoremap <silent> <C-s> :mksession!<CR>
 
 
@@ -50,7 +50,7 @@ imap ;< <% %><left><left><left>
 " RAILS SPECIFIC
 imap ;vp validates_presence_of :
 imap ;bf before_filter :
-nnoremap @R IRAILS_DEFAULT_LOGGER.spark "#{<ESC>A.inspect}"
+nnoremap @R IRAILS_DEFAULT_LOGGER.spark <ESC>A.inspect
 nnoremap @F Idef <ESC>oend<ESC>O<tab>
 nnoremap @E vbyA.each do <BAR><ESC>pxa<BAR><ESC>oend<ESC>O<tab>
 
@@ -63,4 +63,3 @@ syntax on
 let java_highlight_all=1
 let java_highlight_functions="style"
 let java_allow_cpp_keywords=1
-autocmd FileType java source ~/Ubuntu\ One/.vim/java.vim
