@@ -35,10 +35,14 @@ set wmh=0
 
 
 
+" abbreviations
+iab logger RAILS_DEFAULT_LOGGER.spark
+
 
 "Custom mappings
 nmap <Leader>s :source /home/adrian/.gvimrc<CR>
-nnoremap <silent> <C-s> :mksession!<CR>
+nmap <tab><tab> :NERDTreeToggle<CR>
+noremap <silent> <C-s> <Esc>:w<CR>
 
 
 " GENERAL
