@@ -13,7 +13,7 @@ set shiftwidth=2  " Tabs under smart indent
 set incsearch "set incremenetal search
 set formatoptions=q
 set showmatch  " Show matching brackets.
-set mat=5  " Bracket blinking.
+set mat=2  " Bracket blinking.
 autocmd BufWinEnter * set foldlevel=999999
 set lcs=tab:\ \ ,trail:~,extends:>,precedes:<
 set novisualbell  " No blinking .
@@ -24,7 +24,6 @@ set laststatus=2  " Always show status line.
 set mousehide  " Hide mouse after chars typed
 set mouse=a  " Mouse in all modes
 colorscheme neon
-set tags=./tags;/
 
 
 
@@ -35,12 +34,11 @@ set wmh=0
 
 
 
-" abbreviations
-iab logger RAILS_DEFAULT_LOGGER.spark
 
 
 "Custom mappings
 nmap <Leader>s :source /home/adrian/.gvimrc<CR>
+inoremap <silent> <C-Space> <C-p>
 nmap <tab><tab> :NERDTreeToggle<CR>
 noremap <silent> <C-s> <Esc>:w<CR>
 
@@ -51,12 +49,26 @@ imap ( ()<left>
 imap [ []<left>
 imap ;< <% %><left><left><left>
 
+
 " RAILS SPECIFIC
 imap ;vp validates_presence_of :
 imap ;bf before_filter :
 nnoremap @R IRAILS_DEFAULT_LOGGER.spark <ESC>A.inspect
 nnoremap @F Idef <ESC>oend<ESC>O<tab>
 nnoremap @E vbyA.each do <BAR><ESC>pxa<BAR><ESC>oend<ESC>O<tab>
+
+" abbreviations
+iab logger RAILS_DEFAULT_LOGGER.spark
+iab ins inspect
+iab <% <% %><left><left><left>
+
+" spelling correction abbreviations
+iab prodcut product
+iab cotent content
+iab cotnet content
+iab cotnent content
+iab ned end
+iab nde	end
 
 
 " JAVA SPECIFIC
