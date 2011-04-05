@@ -4,7 +4,7 @@ Run install.sh to complete instalation.
 What this does is :
 	- creates a symlink ~/.vim/ -> ~/vim_config # folder used for plugins, docs and colorschemes
 	- creates ~/.gvimrc which sources ~/vim_config/gvimrc ( if it already exists, it will append the line at the end of the file)
-	- finally it created ~/.vim-tmp. This is used to store all .swp files in a central directory.Easier to get rid of them in case of a sudden reboot.
+	- finally it creates ~/.vim-tmp. This is used to store all .swp files in a central directory.Easier to get rid of them in case of a sudden reboot.
 
 
 Plugins included:
