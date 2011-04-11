@@ -4,7 +4,7 @@ set shiftwidth=2  " Tabs under smart indent
 
 imap ;vp validates_presence_of :
 imap ;bf before_filter :
-nnoremap <C-e> o<% end %><ESC>O<TAB>
+nnoremap <C-e> oend<ESC>O<TAB>
 
 iab logger RAILS_DEFAULT_LOGGER.spark
 iab ins inspect

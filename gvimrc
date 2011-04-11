@@ -55,12 +55,6 @@ map <F4> :TlistToggle<cr>
 noremap <silent> <C-s> <Esc>:w<CR>
 
 
-" GENERAL
-imap { {}<left>
-imap ( ()<left>
-imap [ []<left>
-imap ;< <% %><left><left><left>
-
 " spelling correction abbreviations
 iab prodcut product
 iab cotent content
