@@ -7,9 +7,7 @@ set ruler  " Ruler on
 set nu  " Line numbers on
 set nowrap  " Line wrapping off
 set timeoutlen=250  " Time to wait after ESC (default causes an annoying delay)
-set ts=2  " Tabs are 2 spaces
 set bs=2  " Backspace over everything in insert mode
-set shiftwidth=2  " Tabs under smart indent
 set incsearch "set incremenetal search
 set formatoptions=q
 set showmatch  " Show matching brackets.
@@ -44,20 +42,16 @@ set mouse=a  " Mouse in all modes
 colorscheme neon
 
 
-
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 50
-map <F4> :TlistToggle<cr>
 set wmh=0
-
-
 
 
 
 "Custom mappings
 nmap <Leader>s :source /home/adrian/.gvimrc<CR>
-inoremap <silent> <C-Space> <C-p>
 nmap <tab><tab> :NERDTreeToggle<CR>
+map <F4> :TlistToggle<cr>
 noremap <silent> <C-s> <Esc>:w<CR>
 
 
@@ -66,20 +60,6 @@ imap { {}<left>
 imap ( ()<left>
 imap [ []<left>
 imap ;< <% %><left><left><left>
-
-
-" RAILS SPECIFIC
-imap ;vp validates_presence_of :
-imap ;bf before_filter :
-nnoremap @R IRAILS_DEFAULT_LOGGER.spark <ESC>A.inspect
-nnoremap @F Idef <ESC>oend<ESC>O<tab>
-nnoremap @E vbyA.each do <BAR><ESC>pxa<BAR><ESC>oend<ESC>O<tab>
-nnoremap <C-e> o<% end %><ESC>O<TAB>
-
-" abbreviations
-iab logger RAILS_DEFAULT_LOGGER.spark
-iab ins inspect
-iab <% <% %><left><left><left>
 
 " spelling correction abbreviations
 iab prodcut product
@@ -90,11 +70,4 @@ iab ned end
 iab nde	end
 
 
-" JAVA SPECIFIC
 
-set sm
-set ai
-syntax on
-let java_highlight_all=1
-let java_highlight_functions="style"
-let java_allow_cpp_keywords=1
