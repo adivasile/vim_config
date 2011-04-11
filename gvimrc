@@ -74,6 +74,7 @@ imap ;bf before_filter :
 nnoremap @R IRAILS_DEFAULT_LOGGER.spark <ESC>A.inspect
 nnoremap @F Idef <ESC>oend<ESC>O<tab>
 nnoremap @E vbyA.each do <BAR><ESC>pxa<BAR><ESC>oend<ESC>O<tab>
+nnoremap <C-e> o<% end %><ESC>O<TAB>
 
 " abbreviations
 iab logger RAILS_DEFAULT_LOGGER.spark
