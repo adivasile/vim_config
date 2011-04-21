@@ -20,7 +20,22 @@ set laststatus=2  " Always show status line.
 
 set hidden
 
+set ts=2  " Tabs are 2 spaces
+set shiftwidth=2  " Tabs under smart indent
+set smarttab
+set expandtab
+set autoindent
+
 let mapleader = "," 
+
+" Tab contols, open, new, close and jump keys
+map to <Esc>:browse tabnew<CR> 
+map tn <Esc>:tabnew<CR>
+map tc <Esc>:tabclose<CR>
+map <F9> :tabfirst<CR>
+map <F10> :tabp<CR>
+map <F11> :tabn<CR>
+map <F12> :tablast<CR>
 
 " auto-completion settings
 set wildmenu
