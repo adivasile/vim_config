@@ -59,9 +59,13 @@ colorscheme neon
 
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 50
+let Tlist_Use_Right_Window = 1
 set wmh=0
 
 
+imap { {}<left>
+imap [ []<left>
+imap ( ()<left>
 
 "Custom mappings
 nmap <Leader>s :source /home/adrian/.gvimrc<CR>
