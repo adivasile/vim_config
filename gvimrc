@@ -84,5 +84,8 @@ iab cotnent content
 iab ned end
 iab nde	end
 
+source ~/vim_config/custom.vim
 
+"Commands
+command! Bashrc call EditBashrc()
 
