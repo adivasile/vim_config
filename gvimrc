@@ -88,4 +88,5 @@ source ~/vim_config/custom.vim
 
 "Commands
 command! Bashrc call EditBashrc()
+command! Gvimrc call EditGvimrc()
 
