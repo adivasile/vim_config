@@ -1,7 +1,6 @@
 filetype plugin on  " Automatically detect file types.
 set history=1000
 set nocompatible  " We don't want vi compatibility
-set clipboard+=unnamed  " Yanks go on clipboard instead.
 set autowrite  " Writes on make/shell commands
 set ruler  " Ruler on
 set nu  " Line numbers on
@@ -18,8 +17,6 @@ set novisualbell  " No blinking .
 set noerrorbells  " No noise.
 set laststatus=2  " Always show status line.
 
-set hidden
-
 set gfn=Monaco\ 10
 
 set ts=2  " Tabs are 2 spaces
@@ -27,6 +24,10 @@ set shiftwidth=2  " Tabs under smart indent
 set smarttab
 set expandtab
 set autoindent
+
+set showcmd
+
+nnoremap <C-p> "+p
 
 let mapleader = "," 
 
@@ -59,11 +60,15 @@ set mouse=a  " Mouse in all modes
 colorscheme neon
 
 
+let g:clipbrdDefaultReg = '+'
+
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 50
 let Tlist_Use_Right_Window = 1
 set wmh=0
 
+" hashrockets made easy
+imap <C-l> <Space>=><Space>
 
 imap { {}<left>
 imap [ []<left>
@@ -75,7 +80,6 @@ nmap <tab><tab> :NERDTreeToggle<CR>
 map <F4> :TlistToggle<cr>
 noremap <silent> <C-s> <Esc>:w<CR>
 
-
 " spelling correction abbreviations
 iab prodcut product
 iab cotent content
@@ -83,6 +87,13 @@ iab cotnet content
 iab cotnent content
 iab ned end
 iab nde	end
+
+map <right> <ESC>:bn<RETURN>
+map <left> <ESC>:bp<RETURN>
+
+nnoremap ,, <S-a>,<ESC>,
+
+nore ; :
 
 source ~/vim_config/custom.vim
 
