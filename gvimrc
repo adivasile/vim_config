@@ -88,12 +88,13 @@ iab cotnent content
 iab ned end
 iab nde	end
 
-map <right> <ESC>:bn<RETURN>
-map <left> <ESC>:bp<RETURN>
+map <right> <Nop>
+map <up> <Nop>
+map <left> <Nop>
+map <down> <Nop>
 
 nnoremap ,, <S-a>,<ESC>,
 
-nore ; :
 
 source ~/vim_config/custom.vim
 
