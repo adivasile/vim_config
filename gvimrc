@@ -74,11 +74,15 @@ imap { {}<left>
 imap [ []<left>
 imap ( ()<left>
 
+imap jj <Esc>
+
 "Custom mappings
 nmap <Leader>s :source /home/adrian/.gvimrc<CR>
 nmap <tab><tab> :NERDTreeToggle<CR>
 map <F4> :TlistToggle<cr>
 noremap <silent> <C-s> <Esc>:w<CR>
+nnoremap <silent> <C-f> <Esc>:FufCoverageFile<CR>
+nnoremap <silent> <C-b> <Esc>:FufBuffer<CR>
 
 " spelling correction abbreviations
 iab prodcut product
@@ -101,4 +105,5 @@ source ~/vim_config/custom.vim
 "Commands
 command! Bashrc call EditBashrc()
 command! Gvimrc call EditGvimrc()
+
 
