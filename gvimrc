@@ -99,6 +99,10 @@ map <down> <Nop>
 
 nnoremap ,, <S-a>,<ESC>,
 
+nnoremap <C-p>c <Esc>:FindControllers<CR>
+nnoremap <C-p>cs <Esc>:FindControllersSpec<CR>
+nnoremap <C-p>m <Esc>:FindModels<CR>
+nnoremap <C-p>ms <Esc>:FindModelsSpec<CR>
 
 source ~/vim_config/custom.vim
 
@@ -107,3 +111,15 @@ command! Bashrc call EditBashrc()
 command! Gvimrc call EditGvimrc()
 
 
+"Fuzzy finder stuff
+command! FindControllers call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['app/controllers/*.rb', 'vendor/plugins/**/app/controllers/*.rb', 'vendor/plugins/**/app/controllers/**/*.rb']]) 
+      \ | FufCoverageFile 
+
+command! FindModels call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['app/models/*.rb', 'vendor/plugins/**/app/models/*.rb']]) 
+      \ | FufCoverageFile 
+
+command! FindControllersSpec call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['spec/controllers/*.rb']]) 
+      \ | FufCoverageFile
+
+command! FindModelsSpec call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['spec/models/*.rb']]) 
+      \ | FufCoverageFile
