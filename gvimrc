@@ -81,8 +81,6 @@ nmap <Leader>s :source /home/adrian/.gvimrc<CR>
 nmap <tab><tab> :NERDTreeToggle<CR>
 map <F4> :TlistToggle<cr>
 noremap <silent> <C-s> <Esc>:w<CR>
-nnoremap <silent> <C-f> <Esc>:FufCoverageFile<CR>
-nnoremap <silent> <C-b> <Esc>:FufBuffer<CR>
 
 " spelling correction abbreviations
 iab prodcut product
