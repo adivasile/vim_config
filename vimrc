@@ -66,6 +66,9 @@ set hlsearch "Highlight search things
 set incsearch "Make search act like search in modern browsers
 set nolazyredraw "Don't redraw while executing macros 
 
+
+set nowrap " no wrapping for me, thank you.
+set nu " line numbers are cool
 set magic "Set magic on, for regular expressions
 
 set showmatch "Show matching bracets when text indicator is over them
