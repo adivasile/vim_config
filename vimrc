@@ -499,6 +499,7 @@ nnoremap <C-p>c <Esc>:FindControllers<CR>
 nnoremap <C-p>cs <Esc>:FindControllersSpec<CR>
 nnoremap <C-p>m <Esc>:FindModels<CR>
 nnoremap <C-p>ms <Esc>:FindModelsSpec<CR>
+nnoremap <leader>u <Esc>:FufBuffer<CR>
 
 command! FindControllers call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['app/controllers/*.rb', 'vendor/plugins/**/app/controllers/*.rb', 'vendor/plugins/**/app/controllers/**/*.rb']]) 
       \ | FufCoverageFile 
