@@ -47,6 +47,7 @@ autocmd! bufwritepost vimrc source ~/vim_config/vimrc
 set so=7
 
 set wildmenu "Turn on WiLd menu
+set wildmode=longest:full
 
 set ruler "Always show current position
 
@@ -96,11 +97,9 @@ if has("gui_running")
   set t_Co=256
   set background=dark
   colorscheme neon
-  set nonu
 else
   "colorscheme zellner
   set background=dark
-  set nonu
 endif
 
 set encoding=utf8
@@ -329,13 +328,13 @@ vnoremap $q <esc>`>a'<esc>`<i'<esc>
 vnoremap $e <esc>`>a"<esc>`<i"<esc>
 
 " Map auto complete of (, ", ', [
-inoremap $1 ()<esc>i
-inoremap $2 []<esc>i
-inoremap $3 {}<esc>i
+inoremap (( ()<esc>i
+inoremap [[ []<esc>i
+inoremap {{ {}<esc>i
 inoremap $4 {<esc>o}<esc>O
 inoremap $q ''<esc>i
 inoremap $e ""<esc>i
-inoremap $t <><esc>i
+inoremap << <><esc>i
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -471,7 +470,7 @@ map <leader>bb :cd ..<cr>
 inoremap jj <ESC>
 
 """"""""""""""""""""""""""""""""""
-" => TagList "
+" => TagList
 """"""""""""""""""""""""""""""""
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 50
