@@ -31,11 +31,10 @@ let mapleader = ","
 let g:mapleader = ","
 
 " Fast saving
-nmap <leader>w :w!<cr>
 nmap <C-s> :w!<CR>
 
 " Fast editing of the .vimrc
-map <leader>e :e! ~/vim_config/vimrc<cr>
+map <leader>r :e! ~/vim_config/vimrc<cr>
 
 " When vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/vim_config/vimrc
@@ -52,6 +51,8 @@ set wildmode=longest:full
 set ruler "Always show current position
 
 set cmdheight=2 "The commandbar height
+
+set foldlevel=999
 
 set hid "Change buffer - without saving
 
@@ -486,7 +487,6 @@ source ~/vim_config/custom.vim
 command! Bashrc call EditBashrc()
 command! Gvimrc call EditGvimrc()
 
-autocmd BufWinEnter * set foldlevel=999999 " no folding
 
 "Custom mappings
 nmap <Leader>s :source /home/adrian/.gvimrc<CR>
@@ -501,7 +501,9 @@ nnoremap <C-p>c <Esc>:FindControllers<CR>
 nnoremap <C-p>cs <Esc>:FindControllersSpec<CR>
 nnoremap <C-p>m <Esc>:FindModels<CR>
 nnoremap <C-p>ms <Esc>:FindModelsSpec<CR>
-nnoremap <leader>u <Esc>:FufBuffer<CR>
+nnoremap <leader>e <Esc>:FufBuffer<CR>
+nmap <leader>w <ESC>:FufCoverageFile<cr>
+let g:fuf_keyOpenSplit = '<C-q>'
 
 command! FindControllers call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['app/controllers/*.rb', 'vendor/plugins/**/app/controllers/*.rb', 'vendor/plugins/**/app/controllers/**/*.rb']]) 
       \ | FufCoverageFile 
@@ -514,3 +516,22 @@ command! FindControllersSpec call fuf#setOneTimeVariables(['g:fuf_coveragefile_g
 
 command! FindModelsSpec call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['spec/models/*.rb']]) 
       \ | FufCoverageFile
+
+"toggles whether or not the current window is automatically zoomed
+function! ToggleMaxWins()
+  if exists('g:windowMax')
+    au! maxCurrWin
+    exe "normal \<c-w>="
+    unlet g:windowMax
+  else
+    augroup maxCurrWin
+    " au BufEnter * exe "normal \<c-w>_\<c-w>\<Bar>"
+    "
+    " only max it vertically
+    au! WinEnter * exe "normal \<c-w>_"
+    augroup END
+    do maxCurrWin WinEnter
+    let g:windowMax=1
+  endif
+endfunction
+map <Leader>m :call ToggleMaxWins()<CR>
