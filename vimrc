@@ -53,6 +53,61 @@ set ruler "Always show current position
 set cmdheight=2 "The commandbar height
 
 set foldlevel=999
+" set foldmethod=expr 
+" set foldenable
+" 
+function! RubyMethodFold(line)
+    
+  let line_is_method_or_end = synIDattr(synID(a:line,1,0), 'name') == 'rubyBlock'
+  let line_is_def = getline(a:line) =~ '\s*def '
+  return line_is_method_or_end || line_is_def
+endfunction
+
+function! GetSynInfo()
+    let stack = synstack(line("."), col("."))
+
+    let info = ""
+
+    for synid in reverse(stack)
+        if strlen(info)
+            let info .= " < "
+        endif
+
+        let syn = GetSynDict(synid)
+        let info .= GetSynInfoString(syn)
+    endfor
+
+    return info
+endfunction
+
+function! GetSynInfoString(syndict)
+    if a:syndict["syn"] != a:syndict["hi"]
+        let add_hi = a:syndict["hi"]." "
+    else
+        let add_hi = ""
+    endif
+
+    return a:syndict["syn"]." (".add_hi."fg=".a:syndict["fg"]." bg=".a:syndict["bg"].")"
+endfunction
+
+function! GetHereSynId(trans)
+    return synID(line("."), col("."), a:trans) 
+endfunction
+
+function! GetSynDict(synid)
+    let hiid = synIDtrans(a:synid)
+
+    let syn = synIDattr(a:synid, "name")
+    let hi = synIDattr(hiid, "name")
+    let fg = synIDattr(hiid, "fg")
+    let bg = synIDattr(hiid, "bg")
+
+    return {"syn":syn, "hi":hi, "fg":fg, "bg":bg}
+endfunction
+
+nnoremap g<C-h> :echo GetSynInfo()<CR>
+ 
+" set foldexpr=RubyMethodFold(v:lnum)
 
 set hid "Change buffer - without saving
 
