@@ -9,16 +9,15 @@ What this does is :
 
 
 Plugins included:
-	- NERDTree
 	- rails.vim
 	- surround
 	- taglist
-	- tcomment
-	- FuzzyFinder
     - YankRing
+    - fugitive
+    - vim-repeat
+    - command-t
 
 These are the main plugins that I use regularly.
 For instructions on how to use these refer to the plugin's documentation.
-Some other plugins are included at the moment.I didn't include them in the list because I'm thinking of removing them. 
 
 Feel free to fork this repository and change it as you please.
