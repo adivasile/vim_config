@@ -1,16 +1,5 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: amix the lucky stiff
-"             http://amix.dk - amix@amix.dk
-"
-" Version: 3.6 - 25/08/10 14:40:30
-"
-" Blog_post: 
-"       http://amix.dk/blog/post/19486#The-ultimate-vim-configuration-vimrc
-" Syntax_highlighted:
-"       http://amix.dk/vim/vimrc.html
-" Raw_version: 
-"       http://amix.dk/vim/vimrc.txt
-"
+call pathogen#infect()
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -152,10 +141,8 @@ if has("gui_running")
   set guioptions-=T
   set t_Co=256
   set background=dark
-  colorscheme neon
 else
-  "colorscheme zellner
-  set background=dark
+  set background=light
 endif
 
 set encoding=utf8
@@ -259,13 +246,6 @@ cnoremap <C-K>      <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
-" Useful on some European keyboards
-map ½ $
-imap ½ $
-vmap ½ $
-cmap ½ $
-
-
 func! Cwd()
   let cwd = getcwd()
   return "e " . cwd 
@@ -290,8 +270,7 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Map space to / (search) and c-space to ? (backgwards search)
 map <space> /
-map <c-space> ?
-map <silent> <leader><cr> :noh<cr>
+map <silent> <cr> :noh<cr>
 
 " Smart way to move btw. windows
 map <C-j> <C-W>j
@@ -376,21 +355,10 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Parenthesis/bracket expanding
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-vnoremap $1 <esc>`>a)<esc>`<i(<esc>
-vnoremap $2 <esc>`>a]<esc>`<i[<esc>
-vnoremap $3 <esc>`>a}<esc>`<i{<esc>
-vnoremap $$ <esc>`>a"<esc>`<i"<esc>
-vnoremap $q <esc>`>a'<esc>`<i'<esc>
-vnoremap $e <esc>`>a"<esc>`<i"<esc>
-
-" Map auto complete of (, ", ', [
+" Map auto complete of (, [, {
 inoremap (( ()<esc>i
 inoremap [[ []<esc>i
 inoremap {{ {}<esc>i
-inoremap $4 {<esc>o}<esc>O
-inoremap $q ''<esc>i
-inoremap $e ""<esc>i
-inoremap << <><esc>i
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -403,21 +371,11 @@ iab xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
 "Remap VIM 0
 map 0 ^
 
-"Move a line of text using ALT+[jk] or Comamnd+[jk] on mac
+"Move a line of text using ALT+[jk] or Command+[jk] on mac
 nmap <M-j> mz:m+<cr>`z
 nmap <M-k> mz:m-2<cr>`z
 vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
 vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
-
-"Delete trailing white space, useful for Python ;)
-func! DeleteTrailingWS()
-  exe "normal mz"
-  %s/\s\+$//ge
-  exe "normal `z"
-endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-
-set guitablabel=%t
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -433,37 +391,6 @@ map <leader>p :cp<cr>
 " => Omni complete functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
-
-"Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
-
-""""""""""""""""""""""""""""""
-" => Python section
-""""""""""""""""""""""""""""""
-let python_highlight_all = 1
-au FileType python syn keyword pythonDecorator True None False self
-
-au BufNewFile,BufRead *.jinja set syntax=htmljinja
-au BufNewFile,BufRead *.mako set ft=mako
-
-au FileType python inoremap <buffer> $r return
-au FileType python inoremap <buffer> $i import
-au FileType python inoremap <buffer> $p print
-au FileType python inoremap <buffer> $f #--- PH ----------------------------------------------<esc>FP2xi
-au FileType python map <buffer> <leader>1 /class
-au FileType python map <buffer> <leader>2 /def
-au FileType python map <buffer> <leader>C ?class
-au FileType python map <buffer> <leader>D ?def
 
 
 """"""""""""""""""""""""""""""
@@ -485,14 +412,6 @@ au FileType javascript inoremap <buffer> $f //--- PH ---------------------------
 nnoremap <silent> <F11> :YRShow<CR>
 
 
-
-""""""""""""""""""""""""""""""
-" => MRU plugin
-""""""""""""""""""""""""""""""
-let MRU_Max_Entries = 400
-map <leader>f :MRU<CR>
-
-
 """"""""""""""""""""""""""""""
 " => Command-T
 """"""""""""""""""""""""""""""
@@ -501,7 +420,6 @@ set wildignore+=*.o,*.obj,.git,*.pyc
 noremap <leader>j :CommandT<cr>
 noremap <leader>y :CommandTFlush<cr>
 
-
 """"""""""""""""""""""""""""""
 " => Vim grep
 """"""""""""""""""""""""""""""
@@ -509,84 +427,21 @@ let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
 set grepprg=/bin/grep\ -nH
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MISC
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
 "Quickly open a buffer for scripbble
 map <leader>q :e ~/buffer<cr>
 au BufRead,BufNewFile ~/buffer iab <buffer> xh1 ===========================================
-
-map <leader>pp :setlocal paste!<cr>
-
-map <leader>bb :cd ..<cr>
 inoremap jj <ESC>
+
 
 """"""""""""""""""""""""""""""""""
 " => TagList
+map <F4> :TlistToggle<cr>
 """"""""""""""""""""""""""""""""
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 50
 let Tlist_Use_Right_Window = 1
 set wmh=0
 
-"""""""""""""""""""
-" =>Custom
-""""""""""""
-source ~/vim_config/custom.vim
-
-"Commands
-command! Bashrc call EditBashrc()
-command! Gvimrc call EditGvimrc()
-
-
-"Custom mappings
-nmap <Leader>s :source /home/adrian/.gvimrc<CR>
-nmap <tab><tab> :NERDTreeToggle<CR>
-map <F4> :TlistToggle<cr>
-
-
-"""""""""""""""""""""""""""""""""
-" => Fuzzy finder stuff
-"""""""""""""""""""""""""""""""""
-nnoremap <C-p>c <Esc>:FindControllers<CR>
-nnoremap <C-p>cs <Esc>:FindControllersSpec<CR>
-nnoremap <C-p>m <Esc>:FindModels<CR>
-nnoremap <C-p>ms <Esc>:FindModelsSpec<CR>
-nnoremap <leader>e <Esc>:FufBuffer<CR>
-nmap <leader>w <ESC>:FufCoverageFile<cr>
-let g:fuf_keyOpenSplit = '<C-q>'
-
-command! FindControllers call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['app/controllers/*.rb', 'vendor/plugins/**/app/controllers/*.rb', 'vendor/plugins/**/app/controllers/**/*.rb']]) 
-      \ | FufCoverageFile 
-
-command! FindModels call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['app/models/*.rb', 'vendor/plugins/**/app/models/*.rb']]) 
-      \ | FufCoverageFile 
-
-command! FindControllersSpec call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['spec/controllers/*.rb']]) 
-      \ | FufCoverageFile
-
-command! FindModelsSpec call fuf#setOneTimeVariables(['g:fuf_coveragefile_globPatterns', ['spec/models/*.rb']]) 
-      \ | FufCoverageFile
-
-"toggles whether or not the current window is automatically zoomed
-function! ToggleMaxWins()
-  if exists('g:windowMax')
-    au! maxCurrWin
-    exe "normal \<c-w>="
-    unlet g:windowMax
-  else
-    augroup maxCurrWin
-    " au BufEnter * exe "normal \<c-w>_\<c-w>\<Bar>"
-    "
-    " only max it vertically
-    au! WinEnter * exe "normal \<c-w>_"
-    augroup END
-    do maxCurrWin WinEnter
-    let g:windowMax=1
-  endif
-endfunction
-map <Leader>m :call ToggleMaxWins()<CR>
