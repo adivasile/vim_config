@@ -141,8 +141,10 @@ if has("gui_running")
   set guioptions-=T
   set t_Co=256
   set background=dark
+  colorscheme desert
 else
-  set background=light
+  colorscheme darkblue
+  set background=dark
 endif
 
 set encoding=utf8
@@ -434,12 +436,14 @@ set grepprg=/bin/grep\ -nH
 map <leader>q :e ~/buffer<cr>
 au BufRead,BufNewFile ~/buffer iab <buffer> xh1 ===========================================
 inoremap jj <ESC>
+nnoremap <tab><tab> :NERDTreeToggle<cr>
+inoremap <c-space> <space>=><space>
 
 
 """"""""""""""""""""""""""""""""""
 " => TagList
-map <F4> :TlistToggle<cr>
 """"""""""""""""""""""""""""""""
+map <F4> :TlistToggle<cr>
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 50
 let Tlist_Use_Right_Window = 1
