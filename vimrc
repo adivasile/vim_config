@@ -4,8 +4,9 @@ call pathogen#infect()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
 " Sets how many lines of history VIM has to remember
-set history=700
+set history=1000
 
 " Enable filetype plugin
 filetype plugin on
@@ -32,74 +33,22 @@ autocmd! bufwritepost vimrc source ~/vim_config/vimrc
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Set 7 lines to the curors - when moving vertical..
-set so=7
+set so=4
 
 set wildmenu "Turn on WiLd menu
-set wildmode=longest:full
+set wildmode=longest,list
+set scrolloff=3
+
 
 set ruler "Always show current position
 
 set cmdheight=2 "The commandbar height
 
 set foldlevel=999
-" set foldmethod=expr 
-" set foldenable
-" 
-function! RubyMethodFold(line)
-    
-  let line_is_method_or_end = synIDattr(synID(a:line,1,0), 'name') == 'rubyBlock'
-  let line_is_def = getline(a:line) =~ '\s*def '
-  return line_is_method_or_end || line_is_def
-endfunction
-
-function! GetSynInfo()
-    let stack = synstack(line("."), col("."))
-
-    let info = ""
-
-    for synid in reverse(stack)
-        if strlen(info)
-            let info .= " < "
-        endif
-
-        let syn = GetSynDict(synid)
-        let info .= GetSynInfoString(syn)
-    endfor
-
-    return info
-endfunction
-
-function! GetSynInfoString(syndict)
-    if a:syndict["syn"] != a:syndict["hi"]
-        let add_hi = a:syndict["hi"]." "
-    else
-        let add_hi = ""
-    endif
-
-    return a:syndict["syn"]." (".add_hi."fg=".a:syndict["fg"]." bg=".a:syndict["bg"].")"
-endfunction
-
-function! GetHereSynId(trans)
-    return synID(line("."), col("."), a:trans) 
-endfunction
-
-function! GetSynDict(synid)
-    let hiid = synIDtrans(a:synid)
-
-    let syn = synIDattr(a:synid, "name")
-    let hi = synIDattr(hiid, "name")
-    let fg = synIDattr(hiid, "fg")
-    let bg = synIDattr(hiid, "bg")
-
-    return {"syn":syn, "hi":hi, "fg":fg, "bg":bg}
-endfunction
-
-nnoremap g<C-h> :echo GetSynInfo()<CR>
- 
-" set foldexpr=RubyMethodFold(v:lnum)
 
 set hid "Change buffer - without saving
 
+set wrap
 " Set backspace config
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
@@ -113,7 +62,6 @@ set incsearch "Make search act like search in modern browsers
 set nolazyredraw "Don't redraw while executing macros 
 
 
-set nowrap " no wrapping for me, thank you.
 set nu " line numbers are cool
 set magic "Set magic on, for regular expressions
 
@@ -138,14 +86,14 @@ set gfn=Monaco\ 10
 set shell=/bin/bash
 
 if has("gui_running")
-  set guioptions-=T
-  set t_Co=256
   set background=dark
-  colorscheme desert
 else
-  colorscheme darkblue
   set background=dark
 endif
+
+set t_Co=256
+let g:solarized_termcolors=256
+colorscheme solarized
 
 set encoding=utf8
 try
@@ -187,56 +135,9 @@ set ai "Auto indent
 set si "Smart indet
 
 
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
-" Really useful!
-"  In visual mode when you press * or # to search for the current selection
-vnoremap <silent> * :call VisualSearch('f')<CR>
-vnoremap <silent> # :call VisualSearch('b')<CR>
-
-" When you press gv you vimgrep after the selected text
-vnoremap <silent> gv :call VisualSearch('gv')<CR>
-map <leader>g :vimgrep // **/*.<left><left><left><left><left><left><left>
-
-
-function! CmdLine(str)
-    exe "menu Foo.Bar :" . a:str
-    emenu Foo.Bar
-    unmenu Foo
-endfunction
-
-" From an idea by Michael Naumann
-function! VisualSearch(direction) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
-
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'gv'
-        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
-    elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
-
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Command mode related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Smart mappings on the command line
-cno $h e ~/
-cno $d e ~/Desktop/
-cno $j e ./
-cno $c e <C-\>eCurrentFileDir("e")<cr>
-
 " $q is super useful when browsing on the command line
 cno $q <C-\>eDeleteTillSlash()<cr>
 
@@ -280,12 +181,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-" Close the current buffer
-map <leader>bd :Bclose<cr>
-
-" Close all the buffers
-map <leader>ba :1,300 bd!<cr>
-
 " Use the arrows to something usefull
 map <right> <nop>
 map <left> <nop>
@@ -300,34 +195,6 @@ map <leader>tm :tabmove
 
 " When pressing <leader>cd switch to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>
-
-
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-   let l:currentBufNum = bufnr("%")
-   let l:alternateBufNum = bufnr("#")
-
-   if buflisted(l:alternateBufNum)
-     buffer #
-   else
-     bnext
-   endif
-
-   if bufnr("%") == l:currentBufNum
-     new
-   endif
-
-   if buflisted(l:currentBufNum)
-     execute("bdelete! ".l:currentBufNum)
-   endif
-endfunction
-
-" Specify the behavior when switching between buffers 
-try
-  set switchbuf=usetab
-  set stal=2
-catch
-endtry
 
 
 """"""""""""""""""""""""""""""
@@ -441,11 +308,66 @@ inoremap <c-space> <space>=><space>
 
 
 """"""""""""""""""""""""""""""""""
-" => TagList
+" => TagList AND CTAGS
 """"""""""""""""""""""""""""""""
 map <F4> :TlistToggle<cr>
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 50
 let Tlist_Use_Right_Window = 1
 set wmh=0
+map <Leader>rt :!ctags --extra=+f --exclude=.git --exclude=log -R * `rvm gemdir`/gems/*<CR><CR>
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" " Indent if we're at the beginning of a line. Else, do completion.
+" """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" COMMAND-T AND FILE NAVIGATION STUFF
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>gg :topleft 100 :split Gemfile<cr>
+function! ShowRoutes()
+  " Requires 'scratch' plugin
+  :topleft 100 :split __Routes__
+  " Make sure Vim doesn't write __Routes__ as a file
+  :set buftype=nofile
+  " Delete everything
+  :normal 1GdG
+  " Put routes output in buffer
+  :0r! rake -s routes
+  " Size window to number of lines (1 plus rake output length)
+  :exec ":normal " . line("$") . "_ "
+  " Move cursor to bottom
+  :normal 1GG
+  " Delete empty trailing line
+  :normal dd
+endfunction
+map <leader>gR :call ShowRoutes()<cr>
+map <leader>gv :CommandTFlush<cr>\|:CommandT app/views<cr>
+map <leader>gc :CommandTFlush<cr>\|:CommandT app/controllers<cr>
+map <leader>gm :CommandTFlush<cr>\|:CommandT app/models<cr>
+map <leader>gh :CommandTFlush<cr>\|:CommandT app/helpers<cr>
+map <leader>gl :CommandTFlush<cr>\|:CommandT lib<cr>
+map <leader>gp :CommandTFlush<cr>\|:CommandT public<cr>
+map <leader>gs :CommandTFlush<cr>\|:CommandT public/stylesheets/sass<cr>
+map <leader>gf :CommandTFlush<cr>\|:CommandT features<cr>
+map <leader>gt :CommandTFlush<cr>\|:CommandTTag<cr>
+map <leader>f :CommandTFlush<cr>\|:CommandT<cr>
+map <leader>y "*y
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MISC
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+nnoremap <leader><leader> <c-^>
