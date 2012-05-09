@@ -171,7 +171,7 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map space to / (search) and c-space to ? (backgwards search)
+" Map space to / (search) and c-space to ? (backwards search)
 map <space> /
 map <silent> <cr> :noh<cr>
 
@@ -259,8 +259,17 @@ map <leader>p :cp<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Omni complete functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CSS
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
+" RUBY
+autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+
+"improve autocomplete menu color
+highlight Pmenu ctermbg=238 gui=bold
 
 """"""""""""""""""""""""""""""
 " => JavaScript section
@@ -281,13 +290,6 @@ au FileType javascript inoremap <buffer> $f //--- PH ---------------------------
 nnoremap <silent> <F11> :YRShow<CR>
 
 
-""""""""""""""""""""""""""""""
-" => Command-T
-""""""""""""""""""""""""""""""
-let g:CommandTMaxHeight = 15
-set wildignore+=*.o,*.obj,.git,*.pyc
-noremap <leader>j :CommandT<cr>
-noremap <leader>y :CommandTFlush<cr>
 
 """"""""""""""""""""""""""""""
 " => Vim grep
@@ -336,7 +338,12 @@ inoremap <s-tab> <c-n>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " COMMAND-T AND FILE NAVIGATION STUFF
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:CommandTMaxHeight = 15
+set wildignore+=*.o,*.obj,.git,*.pyc
+
 map <leader>gg :topleft 100 :split Gemfile<cr>
+map <leader>gr :topleft :split config/routes.rb<cr>
+
 function! ShowRoutes()
   " Requires 'scratch' plugin
   :topleft 100 :split __Routes__
